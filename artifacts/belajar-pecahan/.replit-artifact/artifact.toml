@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Belajar Pecahan"
+description = "Aplikasi belajar pecahan berbahasa Indonesia untuk siswa, dengan materi, latihan, nilai, refleksi, dan aktivitas pembelajaran."
+version = "1.0.0"
+id = "artifacts/belajar-pecahan"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18532
+
+[services.development]
+run = "pnpm --filter @workspace/belajar-pecahan run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/belajar-pecahan", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/belajar-pecahan/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18532"
+BASE_PATH = "/"
